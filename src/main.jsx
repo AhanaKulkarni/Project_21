@@ -11,7 +11,7 @@ const config = {
     date: "August 22, 2026",
     time: "7:00 PM",
     venue: "Ved Street Regalia",
-    targetDate: "2026-08-22T19:00:00"
+    targetDate: "2026-08-30T00:00:00"
   },
   tripProposal: {
     dates: "August 24 - 28, 2026",
@@ -71,13 +71,13 @@ const shopData = [
 // -----------------------------------------------------
 
 function GoldDust() {
-  const particles = Array.from({ length: 40 }).map((_, i) => ({
+  const particles = Array.from({ length: 15 }).map((_, i) => ({
     id: i,
     left: `${Math.random() * 100}vw`,
-    size: `${Math.random() * 4 + 1}px`,
+    size: `${Math.random() * 2 + 1}px`,
     duration: `${Math.random() * 20 + 10}s`,
     delay: `-${Math.random() * 20}s`,
-    opacity: Math.random() * 0.5 + 0.2
+    opacity: Math.random() * 0.2 + 0.05
   }));
 
   return (
@@ -227,7 +227,7 @@ function Countdown() {
 
   return (
     <div className="countdown-container">
-      <h3 className="gold-gradient-text centered countdown-title">T-MINUS UNTIL THE BIG PROPOSAL</h3>
+      <h3 className="gold-gradient-text centered countdown-title">T-MINUS UNTIL YOUR 21ST BIRTHDAY</h3>
       <div className="countdown-grid">
         <div className="cd-box">
           <span className="cd-num">{String(timeLeft.d).padStart(2, '0')}</span>
@@ -259,12 +259,11 @@ function Countdown() {
 
 function Concierge() {
   const prompts = [
-    { q: "What is the dress code for August 22?", a: "Sharp, elegant, and ready to sweep her off her feet." },
-    { q: "Can I get a hint about the trip?", a: "I am sworn to secrecy, sir. Miss Ahana has explicitly forbidden any leaks." },
-    { q: "What happens if I say no to the proposals?", a: "Error 404: Option not found. Miss Ahana does not take no for an answer." },
+    { q: "What is the exact dress code for August 22?", a: "A crisp white or royal blue shirt, tailored trousers, a sharp blazer, and your finest perfume." },
+    { q: "Can I get a hint about the secret trip?", a: "I am sworn to secrecy. However, I highly recommend packing for luxury, relaxation, and royal treatment." },
+    { q: "What happens if I reject the proposals?", a: "Error 404: Option not found. Miss Ahana does not take no for an answer under any circumstances." },
     { q: "Who funded this entire operation?", a: "The Bank of Ahana's EXTREME Amount of Love for You." },
-    { q: "Why are we going to Udaipur?", a: "Because a king deserves to be celebrated in a city of palaces." },
-    { q: "Is she actually proposing?", a: "I cannot confirm nor deny. But I would strongly advise you to practice your 'Yes'." }
+    { q: "Why are we going to Udaipur?", a: "Because a king deserves to be celebrated in a city of palaces." }
   ];
 
   const [chat, setChat] = useState([{ type: 'agent', text: "Welcome back, Mr. Pardeshi. I am your private Birthday Concierge. How may I assist you today?" }]);

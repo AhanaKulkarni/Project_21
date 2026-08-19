@@ -42,6 +42,7 @@ body {
   border-radius: 50%;
   box-shadow: 0 0 10px var(--gold);
   animation-name: floatUp;
+  filter: blur(1px);
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -210,7 +211,7 @@ input.error { border-bottom: 1px solid #ff4d4d; color: #ff4d4d; }
   background: var(--bg-panel);
   border: 1px solid rgba(197, 160, 89, 0.2);
   border-radius: 12px;
-  padding: 35px;
+  padding: 30px;
   backdrop-filter: blur(12px);
   box-shadow: 0 15px 35px rgba(0,0,0,0.4);
   transition: border-color 0.4s, transform 0.4s;
@@ -514,7 +515,7 @@ input.error { border-bottom: 1px solid #ff4d4d; color: #ff4d4d; }
 .dash-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 40px;
+  gap: 30px;
   z-index: 20;
   position: relative;
 }
@@ -718,3 +719,5 @@ input.error { border-bottom: 1px solid #ff4d4d; color: #ff4d4d; }
 
 .print-header, .print-footer { display: none; }
 @media print { .print-header, .print-footer { display: block; } }
+.dash-col { display: flex; flex-direction: column; gap: 30px; }
+.main-col .elegant-panel { flex-grow: 1; }
