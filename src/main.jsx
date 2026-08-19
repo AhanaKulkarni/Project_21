@@ -182,7 +182,7 @@ function VIPCard() {
             <p className="vip-title">Founder & MD of Aetheron AI Technologies Pvt Ltd</p>
             <div className="vip-funny">
               <span className="strike">Boyfriend of Miss Ahana Kulkarni</span>
-              <span className="tiny-text">(Status Pending: Awaiting August 22nd Dinner)</span>
+              <span className="tiny-text">(Status Pending: Awaiting Proposal)</span>
             </div>
           </div>
           <div className="vip-footer">
