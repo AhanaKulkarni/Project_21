@@ -69,7 +69,7 @@ function Boot({ onComplete }) {
     <div className="boot-screen">
       <div className="terminal">
         {lines.slice(0, step + 1).map((line, i) => (
-          <p key={i} className="typewriter">> {line}</p>
+          <p key={i} className="typewriter">&gt; {line}</p>
         ))}
         {step < lines.length && <span className="blink">_</span>}
       </div>
