@@ -310,19 +310,25 @@ function Concierge() {
 
 function Boot({ onComplete }) {
   const [step, setStep] = useState(0);
+  const [progress, setProgress] = useState(0);
+  
   const lines = [
-    "ESTABLISHING SECURE CONNECTION...",
-    "AUTHENTICATING VIP PROTOCOLS...",
-    "HEY BIRTHDAY BOY,",
-    "WE HAVE BEEN EXPECTING YOU."
+    "Establishing secure connection to A.I.B.O. servers...",
+    "Authenticating VIP protocols for subject 21...",
+    "Bypassing standard security measures...",
+    "Hey Birthday Boy,",
+    "We have been expecting you."
   ];
 
   useEffect(() => {
     if (step < lines.length) {
-      const t = setTimeout(() => setStep(step + 1), 1200);
+      const t = setTimeout(() => {
+        setStep(step + 1);
+        setProgress(((step + 1) / lines.length) * 100);
+      }, 2500);
       return () => clearTimeout(t);
     } else {
-      const t = setTimeout(onComplete, 1500);
+      const t = setTimeout(onComplete, 3000);
       return () => clearTimeout(t);
     }
   }, [step]);
@@ -331,9 +337,11 @@ function Boot({ onComplete }) {
     <div className="boot-screen">
       <div className="terminal">
         {lines.slice(0, step + 1).map((line, i) => (
-          <p key={i} className="typewriter">&gt; {line}</p>
+          <p key={i} className="typewriter" style={{ animationDelay: '0.2s' }}>{line}</p>
         ))}
-        {step < lines.length && <span className="blink">_</span>}
+        <div className="loading-bar-container">
+          <div className="loading-bar" style={{ width: `${progress}%` }}></div>
+        </div>
       </div>
     </div>
   );
