@@ -262,7 +262,7 @@ function Concierge() {
     { q: "What is the dress code for August 22?", a: "Sharp, elegant, and ready to sweep her off her feet." },
     { q: "Can I get a hint about the trip?", a: "I am sworn to secrecy, sir. Miss Ahana has explicitly forbidden any leaks." },
     { q: "What happens if I say no to the proposals?", a: "Error 404: Option not found. Miss Ahana does not take no for an answer." },
-    { q: "Who funded this entire operation?", a: "The Bank of Ahana's Unreasonable Amount of Love for You." },
+    { q: "Who funded this entire operation?", a: "The Bank of Ahana's EXTREME Amount of Love for You." },
     { q: "Why are we going to Udaipur?", a: "Because a king deserves to be celebrated in a city of palaces." },
     { q: "Is she actually proposing?", a: "I cannot confirm nor deny. But I would strongly advise you to practice your 'Yes'." }
   ];
