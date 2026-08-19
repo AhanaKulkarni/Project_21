@@ -227,7 +227,7 @@ function Countdown() {
 
   return (
     <div className="countdown-container">
-      <h3 className="gold-text centered countdown-title">T-MINUS UNTIL THE BIG PROPOSAL</h3>
+      <h3 className="gold-gradient-text centered countdown-title">T-MINUS UNTIL THE BIG PROPOSAL</h3>
       <div className="countdown-grid">
         <div className="cd-box">
           <span className="cd-num">{String(timeLeft.d).padStart(2, '0')}</span>
@@ -364,7 +364,7 @@ function Gate({ onUnlock }) {
   return (
     <div className="gate-screen">
       <div className="auth-box elegant-panel">
-        <h2 className="gold-text">RESTRICTED ACCESS</h2>
+        <h2 className="gold-gradient-text">RESTRICTED ACCESS</h2>
         <div className="elegant-divider"></div>
         <p className="hint">Hint: {config.hint}</p>
         <form onSubmit={handleSubmit}>
@@ -448,7 +448,7 @@ function ProposalDinner({ onClose }) {
         <button className="close-btn" onClick={onClose}>×</button>
         <div className="letter-inner border-elegant">
           <p className="eyebrow">A FORMAL INVITATION</p>
-          <h1 className="gold-text script-text">A Special Evening</h1>
+          <h1 className="gold-gradient-text script-text">A Special Evening</h1>
           <div className="elegant-divider"></div>
           <p className="salutation">My Dearest Ayush,</p>
           <p>You are cordially invited to an exclusive dinner date.</p>
@@ -511,7 +511,7 @@ function ProposalTrip({ onClose }) {
           ) : (
             <div className="unlocked-screen fade-in">
               <p className="eyebrow blue-text">DECRYPTION SUCCESSFUL</p>
-              <h1 className="gold-text script-text large">UDAIPUR</h1>
+              <h1 className="gold-gradient-text script-text large">UDAIPUR</h1>
               <div className="elegant-divider"></div>
               <p className="trip-dates">{config.tripProposal.dates}</p>
               <p className="lock-desc">Get ready for the most incredible, luxurious birthday getaway. Pack your bags, your heart, and your love.</p>
@@ -540,7 +540,7 @@ function Shop({ cart, setCart }) {
 
   return (
     <div className="shop-section" id="boutique">
-      <h2 className="gold-text centered section-title">THE VIP BOUTIQUE</h2>
+      <h2 className="gold-gradient-text centered section-title">THE VIP BOUTIQUE</h2>
       <p className="centered shop-desc">Curate your personalized birthday wishlist.</p>
       <div className="elegant-divider centered-div"></div>
       
@@ -588,7 +588,7 @@ function CartModal({ cart, onClose }) {
       <div className="modal premium-letter">
         <button className="close-btn" onClick={onClose}>×</button>
         <div className="letter-inner border-elegant wishlist-container">
-          <h2 className="gold-text script-text">Your Wishlist</h2>
+          <h2 className="gold-gradient-text script-text">Your Wishlist</h2>
           <div className="elegant-divider"></div>
           
           {cart.length === 0 ? (
@@ -645,7 +645,7 @@ function Dashboard() {
         <main className="dash-grid">
           <div className="dash-col main-col">
             <div className="elegant-panel welcome-panel">
-              <h2 className="gold-text">WELCOME TO YOUR 21ST</h2>
+              <h2 className="gold-gradient-text">WELCOME TO YOUR 21ST</h2>
               <div className="elegant-divider left"></div>
               <p>I have built this entire system to organize your birthday surprises. Explore the timeline, authorize pending events, chat with your concierge, and curate your personalized wishlist below.</p>
             </div>

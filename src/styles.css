@@ -97,6 +97,20 @@ h1, h2, h3, h4 {
   color: var(--gold);
   text-shadow: 0 0 20px var(--gold-glow);
 }
+.gold-gradient-text {
+  background: linear-gradient(45deg, #c19b6c, #f7dfa5, #c19b6c, #8b7141);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: shine 5s linear infinite;
+}
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
 .blue-text {
   color: var(--blue);
   font-family: 'Space Mono', monospace;
