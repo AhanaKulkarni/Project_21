@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 
@@ -11,6 +11,7 @@ const config = {
     date: "August 22, 2026",
     time: "7:00 PM",
     venue: "Ved Street Regalia",
+    targetDate: "2026-08-22T19:00:00"
   },
   tripProposal: {
     dates: "August 24 - 28, 2026",
@@ -65,6 +66,40 @@ const shopData = [
   }
 ];
 
+// -----------------------------------------------------
+// PARTICLES & CURSOR
+// -----------------------------------------------------
+
+function GoldDust() {
+  const particles = Array.from({ length: 40 }).map((_, i) => ({
+    id: i,
+    left: `${Math.random() * 100}vw`,
+    size: `${Math.random() * 4 + 1}px`,
+    duration: `${Math.random() * 20 + 10}s`,
+    delay: `-${Math.random() * 20}s`,
+    opacity: Math.random() * 0.5 + 0.2
+  }));
+
+  return (
+    <div className="gold-dust-container">
+      {particles.map(p => (
+        <div 
+          key={p.id} 
+          className="dust-particle" 
+          style={{
+            left: p.left,
+            width: p.size,
+            height: p.size,
+            animationDuration: p.duration,
+            animationDelay: p.delay,
+            opacity: p.opacity
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function Cursor() {
   const [pos, setPos] = useState({ x: -100, y: -100 });
   const [active, setActive] = useState(false);
@@ -90,6 +125,188 @@ function Cursor() {
     </>
   );
 }
+
+// -----------------------------------------------------
+// 3D VIP CARD
+// -----------------------------------------------------
+
+function VIPCard() {
+  const cardRef = useRef(null);
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = ((y - centerY) / centerY) * -15; // max 15 deg
+    const rotateY = ((x - centerX) / centerX) * 15;
+
+    setRotation({ x: rotateX, y: rotateY });
+    setGlare({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.4
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setRotation({ x: 0, y: 0 });
+    setGlare({ ...glare, opacity: 0 });
+  };
+
+  return (
+    <div className="vip-card-wrapper" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+      <div 
+        ref={cardRef} 
+        className="vip-card"
+        style={{
+          transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`
+        }}
+      >
+        <div className="vip-glare" style={{
+          background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,${glare.opacity}) 0%, transparent 50%)`
+        }} />
+        <div className="vip-content">
+          <div className="vip-header">
+            <span className="vip-logo">A.I.B.O.</span>
+            <span className="vip-status">ELITE MEMBER</span>
+          </div>
+          <div className="vip-chip"></div>
+          <div className="vip-details">
+            <h2>AYUSH PARDESHI</h2>
+            <p className="vip-title">Founder & MD of Aetheron AI Technologies Pvt Ltd</p>
+            <div className="vip-funny">
+              <span className="strike">Boyfriend of Miss Ahana Kulkarni</span>
+              <span className="tiny-text">(Status Pending: Awaiting August 22nd Dinner)</span>
+            </div>
+          </div>
+          <div className="vip-footer">
+            <span>VALID THRU: FOREVER</span>
+            <span>MEMBERSHIP: 21ST EDITION</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// -----------------------------------------------------
+// LUXURY COUNTDOWN
+// -----------------------------------------------------
+
+function Countdown() {
+  const [timeLeft, setTimeLeft] = useState({ d: 0, h: 0, m: 0, s: 0 });
+
+  useEffect(() => {
+    const target = new Date(config.dinnerProposal.targetDate).getTime();
+    
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const diff = target - now;
+      
+      if (diff <= 0) {
+        setTimeLeft({ d: 0, h: 0, m: 0, s: 0 });
+        clearInterval(interval);
+      } else {
+        setTimeLeft({
+          d: Math.floor(diff / (1000 * 60 * 60 * 24)),
+          h: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          m: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+          s: Math.floor((diff % (1000 * 60)) / 1000),
+        });
+      }
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="countdown-container">
+      <h3 className="gold-text centered countdown-title">T-MINUS UNTIL THE BIG PROPOSAL</h3>
+      <div className="countdown-grid">
+        <div className="cd-box">
+          <span className="cd-num">{String(timeLeft.d).padStart(2, '0')}</span>
+          <span className="cd-label">DAYS</span>
+        </div>
+        <div className="cd-sep">:</div>
+        <div className="cd-box">
+          <span className="cd-num">{String(timeLeft.h).padStart(2, '0')}</span>
+          <span className="cd-label">HOURS</span>
+        </div>
+        <div className="cd-sep">:</div>
+        <div className="cd-box">
+          <span className="cd-num">{String(timeLeft.m).padStart(2, '0')}</span>
+          <span className="cd-label">MINS</span>
+        </div>
+        <div className="cd-sep">:</div>
+        <div className="cd-box">
+          <span className="cd-num">{String(timeLeft.s).padStart(2, '0')}</span>
+          <span className="cd-label">SECS</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// -----------------------------------------------------
+// CONCIERGE CHAT
+// -----------------------------------------------------
+
+function Concierge() {
+  const prompts = [
+    { q: "What is the dress code for August 22?", a: "Sharp, elegant, and ready to sweep her off her feet." },
+    { q: "Can I get a hint about the trip?", a: "I am sworn to secrecy, sir. Miss Ahana has explicitly forbidden any leaks." },
+    { q: "What happens if I say no to the proposals?", a: "Error 404: Option not found. Miss Ahana does not take no for an answer." },
+    { q: "Who funded this entire operation?", a: "The Bank of Ahana's Unreasonable Amount of Love for You." },
+    { q: "Why are we going to Udaipur?", a: "Because a king deserves to be celebrated in a city of palaces." },
+    { q: "Is she actually proposing?", a: "I cannot confirm nor deny. But I would strongly advise you to practice your 'Yes'." }
+  ];
+
+  const [chat, setChat] = useState([{ type: 'agent', text: "Welcome back, Mr. Pardeshi. I am your private Birthday Concierge. How may I assist you today?" }]);
+  const [typing, setTyping] = useState(false);
+
+  const ask = (prompt) => {
+    setChat([...chat, { type: 'user', text: prompt.q }]);
+    setTyping(true);
+    setTimeout(() => {
+      setChat(prev => [...prev, { type: 'agent', text: prompt.a }]);
+      setTyping(false);
+    }, 1500);
+  };
+
+  return (
+    <div className="elegant-panel concierge-panel">
+      <h3 className="gold-text centered"><span className="icon">🤵‍♂️</span> THE CONCIERGE</h3>
+      <div className="elegant-divider"></div>
+      
+      <div className="chat-window">
+        {chat.map((msg, i) => (
+          <div key={i} className={`chat-bubble ${msg.type}`}>
+            {msg.text}
+          </div>
+        ))}
+        {typing && <div className="chat-bubble agent typing">...</div>}
+      </div>
+      
+      <div className="chat-prompts">
+        {prompts.map((p, i) => (
+          <button key={i} className="gold-btn small-btn prompt-btn" onClick={() => ask(p)} disabled={typing}>
+            {p.q}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// -----------------------------------------------------
+// BOOT & GATE
+// -----------------------------------------------------
 
 function Boot({ onComplete }) {
   const [step, setStep] = useState(0);
@@ -177,6 +394,10 @@ function DoorTransition({ onComplete }) {
   );
 }
 
+// -----------------------------------------------------
+// DASHBOARD WIDGETS & MODALS
+// -----------------------------------------------------
+
 function Calendar({ openProposal }) {
   const days = [];
   for (let i = 20; i <= 30; i++) {
@@ -221,7 +442,7 @@ function ProposalDinner({ onClose }) {
           <p className="eyebrow">A FORMAL INVITATION</p>
           <h1 className="gold-text script-text">A Special Evening</h1>
           <div className="elegant-divider"></div>
-          <p className="salutation">My Dearest,</p>
+          <p className="salutation">My Dearest Ayush,</p>
           <p>You are cordially invited to an exclusive dinner date.</p>
           <div className="letter-details">
             <p><strong>VENUE</strong> <br/>{config.dinnerProposal.venue}</p>
@@ -295,6 +516,10 @@ function ProposalTrip({ onClose }) {
   );
 }
 
+// -----------------------------------------------------
+// SHOPPING EXPERIENCE
+// -----------------------------------------------------
+
 function Shop({ cart, setCart }) {
   const toggleItem = (item) => {
     const exists = cart.find(c => c.id === item.id);
@@ -308,7 +533,7 @@ function Shop({ cart, setCart }) {
   return (
     <div className="shop-section" id="boutique">
       <h2 className="gold-text centered section-title">THE VIP BOUTIQUE</h2>
-      <p className="centered shop-desc">Add whatever you desire to your exclusive birthday wishlist.</p>
+      <p className="centered shop-desc">Curate your personalized birthday wishlist.</p>
       <div className="elegant-divider centered-div"></div>
       
       {shopData.map(cat => (
@@ -359,7 +584,7 @@ function CartModal({ cart, onClose }) {
           <div className="elegant-divider"></div>
           
           {cart.length === 0 ? (
-            <p className="empty-cart">Your cart is empty. Please visit the VIP Boutique to select your gifts.</p>
+            <p className="empty-cart">Your cart is empty. Please visit the VIP Boutique.</p>
           ) : (
             <ul className="cart-list print-area">
               {cart.map(item => (
@@ -380,6 +605,10 @@ function CartModal({ cart, onClose }) {
   );
 }
 
+// -----------------------------------------------------
+// MAIN DASHBOARD
+// -----------------------------------------------------
+
 function Dashboard() {
   const [activeProposal, setActiveProposal] = useState(null);
   const [cart, setCart] = useState([]);
@@ -387,24 +616,30 @@ function Dashboard() {
 
   return (
     <div className="dashboard-scroll-container">
+      <GoldDust />
       
-      {/* STICKY CART BUTTON */}
       <button className="sticky-cart gold-btn" onClick={() => setShowCart(true)}>
         WISH LIST ({cart.length})
       </button>
 
       <div className="dashboard">
-        <header className="elegant-header">
-          <h1 className="gold-text script-text main-title">Birthday Command Center</h1>
-          <p className="blue-text tracking-text">SUBJECT: BIRTHDAY BOY | STATUS: CELEBRATION IN PROGRESS</p>
-        </header>
+        
+        {/* VIP CARD COMPONENT */}
+        <div className="card-section">
+          <VIPCard />
+        </div>
+
+        {/* LUXURY COUNTDOWN */}
+        <Countdown />
+
+        <div className="section-separator"><span className="gold-text">✧ ✧ ✧</span></div>
 
         <main className="dash-grid">
           <div className="dash-col main-col">
             <div className="elegant-panel welcome-panel">
               <h2 className="gold-text">WELCOME TO YOUR 21ST</h2>
               <div className="elegant-divider left"></div>
-              <p>I have built this entire system to organize your birthday surprises. Explore the timeline, authorize pending events, and curate your personalized wishlist in the VIP Boutique below.</p>
+              <p>I have built this entire system to organize your birthday surprises. Explore the timeline, authorize pending events, chat with your concierge, and curate your personalized wishlist below.</p>
             </div>
             
             <div className="proposals-list elegant-panel">
@@ -433,34 +668,16 @@ function Dashboard() {
           
           <div className="dash-col side-col">
             <Calendar openProposal={setActiveProposal} />
-            
-            <div className="elegant-panel stats-panel">
-              <h3 className="gold-text centered">MISSION STATS</h3>
-              <div className="elegant-divider centered-div"></div>
-              <div className="stat">
-                <span>AGE</span>
-                <span className="gold-text">21</span>
-              </div>
-              <div className="stat">
-                <span>LOVE LEVEL</span>
-                <span className="gold-text">MAXIMUM</span>
-              </div>
-              <div className="stat">
-                <span>SURPRISES LEFT</span>
-                <span className="gold-text">MULTIPLE</span>
-              </div>
-            </div>
+            <Concierge />
           </div>
         </main>
 
-        <div className="section-separator">
-          <span className="gold-text">✧ ✧ ✧</span>
-        </div>
+        <div className="section-separator"><span className="gold-text">✧ ✧ ✧</span></div>
 
         <Shop cart={cart} setCart={setCart} />
 
         <footer className="elegant-footer">
-          <p className="gold-text script-text">With all my love, Ayana.</p>
+          <p className="gold-text script-text">With all my love, Ahana.</p>
         </footer>
 
         {activeProposal === 'dinner' && <ProposalDinner onClose={() => setActiveProposal(null)} />}
