@@ -1,8 +1,166 @@
-import React,{useEffect,useState}from'react';import{createRoot}from'react-dom/client';import'./styles.css';import'./extras.css';
-// ADMIN CONTENT PANEL: Change personal details here. The real destination intentionally does not exist in public code.
-const data={name:'Birthday Boy',access:'21',date:'26 — 29 AUGUST 2026',wrongDestination:'GOA',deployment:'2026-08-26T00:00:00',notes:['I have absolutely no idea what I’m doing.','He still thinks we’re going where I told him.','This is getting way too elaborate.','At this point I have accidentally built an entire intelligence agency.'],gifts:['THE FIRST SIGNAL','FILM EVIDENCE','OBJECT OF INTEREST','AUDIO FILE','THE MAP','UNSENT MESSAGE','MEMORY RECONSTRUCTION','VAULT ACCESS','NIGHT SKY','POLAROID ARCHIVE','SIDE B','SYSTEM ANOMALY','FIELD OBJECT','MINI MISSION','CLASSIFIED FILE','LETTER FROM LATER','PORTAL','COORDINATE','COUNTDOWN','NEARLY THERE','FINAL FILE']};
-function Scope(){const[s,setS]=useState({x:-80,y:-80,l:false,f:false});useEffect(()=>{let t;let m=e=>setS(v=>({...v,x:e.clientX,y:e.clientY,l:!!e.target.closest('button,input')}));let d=()=>{setS(v=>({...v,f:true}));clearTimeout(t);t=setTimeout(()=>setS(v=>({...v,f:false})),180)};addEventListener('pointermove',m);addEventListener('pointerdown',d);return()=>{removeEventListener('pointermove',m);removeEventListener('pointerdown',d);clearTimeout(t)}},[]);return <i className={'scope '+(s.l?'locked ':'')+(s.f?'fire':'')} style={{left:s.x,top:s.y}}><b/></i>}
-function Boot({next}){const[n,setN]=useState(0);let lines=['INITIALIZING SECURE CONNECTION...','SYSTEM INITIALIZATION ████████████████ 100%','AUTHENTICATION REQUIRED','SUBJECT IDENTIFIED','BIOMETRIC MATCH: 99.8%',`HELLO, ${data.name.toUpperCase()}.`,'WE HAVE BEEN EXPECTING YOU.','ACCESS GRANTED.'];useEffect(()=>{let t=n===lines.length?setTimeout(next,600):setTimeout(()=>setN(n+1),360);return()=>clearTimeout(t)},[n]);return <div className="boot"><i className="cursor"/>{lines.slice(0,n).map((x,i)=><p className={'log '+(i>4?'hello':'')} key={x}>&gt; {x}</p>)}<div className="progress"><b style={{width:`${Math.min(100,n/2*100)}%`}}/></div></div>}
-function Gate({next}){const[c,setC]=useState('');return <div className="access"><div className="accessInner"><p className="eyebrow">A.I.B.O. // PRIVATE SESSION</p><div className="iris"><i/></div><p className="eyebrow">SECURITY QUESTION</p><h1>What is the one thing you were absolutely not supposed to find out?</h1><input value={c} onChange={e=>setC(e.target.value)} placeholder="ENTER ACCESS CODE" inputMode="numeric" onKeyDown={e=>e.key==='Enter'&&c===data.access&&next()}/><button className="button" onClick={()=>c===data.access?next():alert('ACCESS DENIED. HINT: 21.')}>AUTHORIZE ACCESS →</button></div></div>}
-function Invitation({close}){return <div className="shade invitationShade"><article className="invitation"><button className="x" onClick={close}>×</button><p className="eyebrow">OFFICIAL INVITATION // EYES ONLY</p><h1>TO THE MOST<br/>IMPORTANT PERSON</h1><h2>THE BIRTHDAY ESCAPE 2026</h2><p className="issuer">ISSUED BY: AHANA KULKARNI<br/>CHIEF PLANNER, CHIEF SECRET-KEEPER &amp; CHIEF PERSON WHO LOVES YOU</p><hr/><h3>FORMAL PROPOSAL FOR A VERY IMPORTANT TRIP</h3><p>Dear Birthday Boy,</p><p>After careful consideration, extensive planning, several secret conversations, and an unreasonable amount of excitement, I am officially inviting you to accompany me on a <b>very special birthday escape.</b></p><p>The destination is classified. The itinerary is classified. The surprises are very classified.</p><p>Your only responsibility is to say <b>YES</b> and show up.</p><div className="terms"><b>DEPARTURE</b><span>26 AUGUST 2026</span><b>RETURN</b><span>29 AUGUST 2026</span><b>COMPANION</b><span>ME. OBVIOUSLY.</span><b>PURPOSE</b><span>YOUR BIRTHDAY.</span></div><h3>THE TERMS</h3><p>1. You are required to have fun. &nbsp; 2. You are required to let yourself be celebrated. &nbsp; 3. Excessive questions may result in compulsory hugs.</p><blockquote>“Out of all the people in the world, you’re the person I want beside me.”</blockquote><p className="signature">SIGNATURE OF THE BIRTHDAY BOY<br/><i>______________________________</i></p><button className="button" onClick={close}>YES, I’M COMING. ♥</button></article></div>}
-function App(){const[p,setP]=useState('boot'),[invite,setInvite]=useState(false),[vault,setVault]=useState(null);if(p==='boot')return <Boot next={()=>setP('gate')}/>;if(p==='gate')return <Gate next={()=>setP('home')}/>;return <><Scope/><main><header><div><b>AYANA INDUSTRIES™</b><small>BIRTHDAY OPERATIONS DIVISION</small></div><button className="sound">◌</button></header><section className="hero"><p className="eyebrow">◈ CLASSIFIED // PERSONAL // 2026</p><div className="operation">OPERATION</div><div className="birthday">BIRTHDAY</div><div className="twentyOne">21</div><i/><p className="date">{data.date}</p><p className="private">A PRIVATE EXPERIENCE<br/>DESIGNED FOR ONE PERSON.</p><button className="button" onClick={()=>setInvite(true)}>OPEN OFFICIAL INVITATION →</button></section><section className="status"><p>MISSION STATUS <b>● LIVE</b></p>{[['TRIP','80%'],['SURPRISE','50%'],['GIFTS','21 ITEMS'],['DESTINATION','ENCRYPTED']].map(([a,b],i)=><div className="meter" key={a}><label><span>{a}</span><b>{b}</b></label><i className={i===3?'red':''} style={{'--fill':i<2?(i?'50%':'80%'):'100%'}}/></div>)}</section><section><div className="heading"><span>01</span><div><h2>YOUR MISSION</h2><p>SUBJECT: BIRTHDAY BOY // THREAT LEVEL: UNREASONABLY LOVED</p></div></div><article className="mission"><h3>“Your only instruction is to arrive curious.”</h3><p>Everything else has been handled by Romance Operations, Surprise Logistics, and a concerning amount of late-night research.</p></article></section><section><div className="heading"><span>02</span><div><h2>THE VAULT</h2><p>21 OBJECTS. 21 MOMENTS. 1 PERSON.</p></div></div><div className="vault">{data.gifts.map((g,i)=><button className={'gift '+(i<3?'open':'')} onClick={()=>i<3?setVault(g):alert('ACCESS DENIED. YOU’RE NOT SUPPOSED TO KNOW THIS YET.')} key={g}><b>{String(i+1).padStart(2,'0')}</b><span>{i<3?'OPEN':'◈'}</span></button>)}</div></section><section><div className="heading"><span>03</span><div><h2>INTELLIGENCE</h2><p>TRAVEL INTELLIGENCE DIVISION</p></div></div><button className="intel" onClick={()=>alert('SYSTEM WARNING: SOME INFORMATION MAY HAVE BEEN INTENTIONALLY MISREPRESENTED.')}><p>DESTINATION STATUS <b>CONFIRMED</b></p><h1>{data.wrongDestination}</h1><small>CONFIDENCE: 72% &nbsp; <em>/// LOCATION VERIFIED: ERROR</em></small><span>[ INVESTIGATE DISCREPANCY ]</span></button></section><section><div className="heading"><span>04</span><div><h2>FIELD NOTES</h2><p>MESSAGES FROM AHANA // EYES ONLY</p></div></div>{data.notes.map((n,i)=><article className="note" key={n}><small>ENTRY {String(i+1).padStart(3,'0')}</small><p>“{n}”</p></article>)}</section><button className="final" onClick={()=>setInvite(true)}><p className="eyebrow">CLASSIFIED INVITATION</p><h2>ONE IMPORTANT<br/>QUESTION.</h2><span>OPEN DOSSIER →</span></button><footer>AYANA INDUSTRIES™ // PRIVATE PROPERTY OF SUBJECT 21</footer></main>{invite&&<Invitation close={()=>setInvite(false)}/>} {vault&&<div className="shade"><article className="giftModal"><button className="x" onClick={()=>setVault(null)}>×</button><p className="eyebrow">ACCESSING MEMORY</p><h2>{vault}</h2><p className="giftCopy">This capsule is ready for a photo, private message, experience, or physical gift.</p></article></div>}</>};createRoot(document.getElementById('root')).render(<App/>);
+import React, { useState, useEffect } from 'react';
+import { createRoot } from 'react-dom/client';
+import './styles.css';
+
+// Lovey-dovey Birthday 21 website
+
+function ShellIcon() {
+  return (
+    <svg className="shell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22v-6M12 2a9.5 9.5 0 0 0-9.5 9.5c0 3 2 5.5 4.5 7M12 2a9.5 9.5 0 0 1 9.5 9.5c0 3-2 5.5-4.5 7M12 10a4.5 4.5 0 0 0-4.5 4.5c0 1.5 1 2.5 2 3M12 10a4.5 4.5 0 0 1 4.5 4.5c0 1.5-1 2.5-2 3M12 6c-2 0-3.5 1-4 2.5M12 6c2 0 3.5 1 4 2.5" />
+    </svg>
+  );
+}
+
+function HeartIcon() {
+  return (
+    <svg className="heart-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+  );
+}
+
+function Boot({ next }) {
+  const [stage, setStage] = useState(0);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (stage < 2) setStage(stage + 1);
+      else next();
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [stage]);
+
+  return (
+    <div className="boot-screen">
+      <div className="boot-content">
+        <HeartIcon />
+        <h1 className="fade-in">{stage === 0 ? "Preparing a surprise..." : stage === 1 ? "For the most special person..." : "Happy 21st Birthday!"}</h1>
+      </div>
+    </div>
+  );
+}
+
+function Proposal1() {
+  return (
+    <section className="proposal-section">
+      <div className="card">
+        <h2>Proposal 1: A Special Evening</h2>
+        <p className="date">August 22, 2026</p>
+        <div className="details">
+          <p>I would like to officially invite you to a dinner date.</p>
+          <p className="highlight">Ved Street Regalia</p>
+          <p>At 7:00 PM in the evening.</p>
+          <p>Dress nicely, I have something important to ask you. 💍💖</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Proposal2() {
+  const [password, setPassword] = useState('');
+  const [unlocked, setUnlocked] = useState(false);
+  const [error, setError] = useState(false);
+
+  const checkPassword = (e) => {
+    e.preventDefault();
+    if (password.toUpperCase() === 'AYANA') {
+      setUnlocked(true);
+      setError(false);
+    } else {
+      setError(true);
+      setTimeout(() => setError(false), 2000);
+    }
+  };
+
+  if (unlocked) {
+    return (
+      <section className="proposal-section">
+        <div className="card unlocked">
+          <h2>Proposal 2: The Grand Escape</h2>
+          <p className="date">August 24 - 28, 2026</p>
+          <div className="details">
+            <p>Our bags are packed, and our destination is finally revealed!</p>
+            <p>We are going to...</p>
+            <h1 className="destination">UDAIPUR! 🏰✨</h1>
+            <p>Get ready for the most magical trip together.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="proposal-section">
+      <div className="card locked">
+        <h2>Proposal 2: The Secret Trip</h2>
+        <p className="date">August 24 - 28, 2026</p>
+        <p>This destination is highly classified. You thought we were going somewhere else, didn't you?</p>
+        <p>Enter the secret passcode to reveal our true destination.</p>
+        
+        <form onSubmit={checkPassword} className="password-form">
+          <input 
+            type="text" 
+            value={password} 
+            onChange={e => setPassword(e.target.value)} 
+            placeholder="Enter Passcode..."
+            className={error ? 'error' : ''}
+          />
+          <button type="submit">Unlock Destination</button>
+        </form>
+        {error && <p className="error-text">Incorrect passcode, my love! Try again.</p>}
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  const [started, setStarted] = useState(false);
+
+  if (!started) return <Boot next={() => setStarted(true)} />;
+
+  // 21 shells array
+  const shells = Array.from({ length: 21 }, (_, i) => i);
+
+  return (
+    <div className="app-container">
+      <div className="shells-bg">
+        {shells.map((i) => (
+          <div key={i} className="bg-shell" style={{
+            left: `${Math.random() * 90 + 5}%`,
+            top: `${Math.random() * 90 + 5}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            transform: `rotate(${Math.random() * 360}deg)`
+          }}>
+            <ShellIcon />
+          </div>
+        ))}
+      </div>
+
+      <header className="header">
+        <h1>Happy 21st Birthday, My Love!</h1>
+        <p className="timeline">Today: August 20 | The Big Day: August 30</p>
+        <div className="hearts">
+          <HeartIcon /><HeartIcon /><HeartIcon />
+        </div>
+      </header>
+
+      <main className="content">
+        <div className="intro">
+          <p>I have planned a series of surprises for you leading up to your birthday. Since you're turning 21, I wanted to make this the most memorable birthday ever.</p>
+        </div>
+
+        <div className="proposals-container">
+          <Proposal1 />
+          <Proposal2 />
+        </div>
+        
+        <footer className="footer">
+          <p>With all my love, Ayana 💖</p>
+        </footer>
+      </main>
+    </div>
+  );
+}
+
+createRoot(document.getElementById('root')).render(<App />);
