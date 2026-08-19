@@ -173,7 +173,7 @@ function VIPCard() {
         }} />
         <div className="vip-content">
           <div className="vip-header">
-            <span className="vip-logo">A.I.B.O.</span>
+            <span className="vip-logo">PROTOCOL XXI</span>
             <span className="vip-status">ELITE MEMBER</span>
           </div>
           <div className="vip-chip"></div>
@@ -312,7 +312,7 @@ function Boot({ onComplete }) {
   const [progress, setProgress] = useState(0);
   
   const lines = [
-    "Establishing secure connection to A.I.B.O. servers...",
+    "Establishing secure connection to PROTOCOL XXI servers...",
     "Authenticating VIP protocols for subject 21...",
     "Bypassing standard security measures...",
     "Hey Birthday Boy,",
