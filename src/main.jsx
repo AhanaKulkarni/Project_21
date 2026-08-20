@@ -262,8 +262,7 @@ function Concierge() {
     { q: "What is the exact dress code for August 22?", a: "A crisp white or royal blue shirt, tailored trousers, a sharp blazer, and your finest perfume." },
     { q: "Can I get a hint about the secret trip?", a: "I am sworn to secrecy. However, I highly recommend packing for luxury, relaxation, and royal treatment." },
     { q: "What happens if I reject the proposals?", a: "Error 404: Option not found. Miss Ahana does not take no for an answer under any circumstances." },
-    { q: "Who funded this entire operation?", a: "The Bank of Ahana's EXTREME Amount of Love for You." },
-    { q: "Why are we going to Udaipur?", a: "Because a king deserves to be celebrated in a city of palaces." }
+    { q: "Who funded this entire operation?", a: "The Bank of Ahana's EXTREME Amount of Love for You." }
   ];
 
   const [chat, setChat] = useState([{ type: 'agent', text: "Welcome back, Mr. Pardeshi. I am your private Birthday Concierge. How may I assist you today?" }]);
