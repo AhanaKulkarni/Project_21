@@ -53,7 +53,13 @@ const shopData = [
     items: [
       { id: 's1', name: "Vintage Aviators", desc: "Classic top-gun style." },
       { id: 's2', name: "Classic Wayfarers", desc: "Sleek and versatile." },
-      { id: 's3', name: "Retro Round Frames", desc: "For a sophisticated vintage look." }
+      { id: 's3', name: "Retro Round Frames", desc: "For a sophisticated vintage look." },
+      { id: 'acc1', name: "Silver Signet Ring", desc: "Bold, minimal, and timeless." },
+      { id: 'acc2', name: "Gold Cuban Link Chain", desc: "A statement neckpiece." },
+      { id: 'acc3', name: "Minimalist Silver Pendant", desc: "Sleek and understated." },
+      { id: 'acc4', name: "Matte Black Titanium Ring", desc: "Modern and durable." },
+      { id: 'acc5', name: "Premium Chronograph Watch", desc: "Classic precision." },
+      { id: 'acc6', name: "Braided Leather Bracelet", desc: "Perfect for everyday wear." }
     ]
   },
   {
