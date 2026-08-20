@@ -676,14 +676,30 @@ input.error { border-bottom: 1px solid #ff4d4d; color: #ff4d4d; }
 
 @media (max-width: 900px) {
   .dash-grid { grid-template-columns: 1fr; }
-  .dashboard { padding: 40px 20px; }
-  .vip-card { width: 100%; height: auto; aspect-ratio: 1.6; }
-  .cd-num { font-size: 1.5rem; }
-  .cd-box { min-width: 60px; padding: 10px; }
+  .dashboard { padding: 30px 15px; }
+  .cd-num { font-size: 1.3rem; }
+  .cd-box { min-width: 50px; padding: 8px; }
   .letter-details { flex-direction: column; gap: 20px; }
-  .border-elegant { padding: 40px 25px; }
-  .premium-letter h1, .premium-letter h2 { font-size: 2.2rem; }
+  .border-elegant { padding: 30px 20px; }
+  .premium-letter h1, .premium-letter h2 { font-size: 1.8rem; }
   .sticky-cart { bottom: 20px; right: 20px; }
+  .vip-card { width: 100%; height: auto; aspect-ratio: 1.6; }
+}
+
+@media (max-width: 600px) {
+  .vip-card { 
+    aspect-ratio: 0.625; /* Vertical card */
+  }
+  .vip-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .vip-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+  .vip-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .vip-chip { margin-top: auto; margin-bottom: 20px; }
+  .vip-details { margin-bottom: 30px; }
 }
 
 @media print {
